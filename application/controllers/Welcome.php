@@ -22,4 +22,20 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function test($demo){
+
+		$this->load->model('users_mode');
+		$result=$this->users_mode->getUsers();
+		$results="{";
+		$jasonArray=array();
+		foreach($result as $object){
+			$results .="{\"id\":" .$object->id.",\"username\":\"".$object->username."\"},";
+			$jasonArray[]=$object;
+		}
+		$results.="}";
+		//echo $results;
+		echo json_encode($jasonArray);
+		//echo "{\"name\" : ".$result."}";
+	}
 }
