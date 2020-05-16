@@ -22,4 +22,35 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function test($demo){
+
+		$this->load->model('users_mode');
+		$result=$this->users_mode->getUsers();
+		$results="{";
+		$jasonArray=array();
+		foreach($result as $object){
+			$results .="{\"id\":" .$object->id.",\"username\":\"".$object->username."\"},";
+			$jasonArray[]=$object;
+		}
+		$results.="}";
+		//echo $results;
+		echo json_encode($jasonArray);
+		//echo "{\"name\" : ".$result."}";
+	}
+	public function postdata(){
+		$this->form_validation->set_rules('username','Username','required|min_length[2]');
+		if($this->form_validation->run()==FALSE){
+			echo "Errors".validation_errors();
+		//echo "Post:".$this->input->post('username');
+			$errors= array('errors'=>"System failed");
+			$this->session->set_flashdata($errors);
+	}
+
+	}
+	public function getdata(){
+		echo "Post:".$this->input->get('username');
+
+
+	}
 }
