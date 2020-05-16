@@ -38,4 +38,19 @@ class Welcome extends CI_Controller {
 		echo json_encode($jasonArray);
 		//echo "{\"name\" : ".$result."}";
 	}
+	public function postdata(){
+		$this->form_validation->set_rules('username','Username','required|min_length[2]');
+		if($this->form_validation->run()==FALSE){
+			echo "Errors".validation_errors();
+		//echo "Post:".$this->input->post('username');
+			$errors= array('errors'=>"System failed");
+			$this->session->set_flashdata($errors);
+	}
+
+	}
+	public function getdata(){
+		echo "Post:".$this->input->get('username');
+
+
+	}
 }
